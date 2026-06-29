@@ -1,1 +1,0 @@
-print(INDEX_PATH)
