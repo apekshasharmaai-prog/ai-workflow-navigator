@@ -1,57 +1,105 @@
-from pathlib import Path
-from utils.document_loader import load_document
-from utils.chunking import split_into_chunks
-from utils.embeddings import generate_embeddings
-from utils.vector_store import (
-    create_index,
-    add_embeddings,
-    save_index,
-    save_chunks
+from app.config import (
+    KNOWLEDGE_PATH,
+    EMBEDDING_MODEL,
+    INDEX_PATH,
+    CHUNKS_PATH
 )
 
+from app.platform.document_loader import DocumentLoader
+from app.platform.chunk_builder import ChunkBuilder
+from app.platform.embeddings import EmbeddingModel
+from app.platform.vector_store import VectorStore
 
-KNOWLEDGE_BASE = Path("data/knowledge_base")
 
+def main():
 
-def build_knowledge_base():
+    print("=" * 60)
+    print("Enterprise AI Knowledge Index Builder")
+    print("=" * 60)
 
-    index = create_index()
+    # --------------------------------------------------
+    # Load Documents
+    # --------------------------------------------------
 
-    all_chunks = []
+    print("\nLoading documents...")
 
-    json_files = KNOWLEDGE_BASE.rglob("*.json")
+    loader = DocumentLoader(
+        KNOWLEDGE_PATH
+    )
 
-    for file in json_files:
+    documents = loader.load()
 
-        # Load document
-        document = load_document(file)
+    print(f"Loaded {len(documents)} document(s).")
 
-        # Chunk document
-        chunks = split_into_chunks(document)
+    # --------------------------------------------------
+    # Build Chunks
+    # --------------------------------------------------
 
-        # Extract text for embeddings
-        texts = [
-            chunk["text"]
-            for chunk in chunks
-        ]
+    print("\nBuilding chunks...")
 
-        # Generate embeddings
-        embeddings = generate_embeddings(texts)
+    chunk_builder = ChunkBuilder()
 
-        # Store vectors
-        add_embeddings(index, embeddings)
+    chunks = chunk_builder.build(
+        documents
+    )
 
-        # Store chunk metadata
-        all_chunks.extend(chunks)
+    print(f"Created {len(chunks)} chunk(s).")
 
-    save_index(index)
+    # --------------------------------------------------
+    # Generate Embeddings
+    # --------------------------------------------------
 
-    save_chunks(all_chunks)
+    print("\nGenerating embeddings...")
 
-    print("Knowledge Base Created Successfully.")
+    embedding_model = EmbeddingModel(
+        EMBEDDING_MODEL
+    )
+
+    embeddings = []
+
+    for i, chunk in enumerate(chunks, start=1):
+
+        print(
+            f"Embedding {i}/{len(chunks)}",
+            end="\r"
+        )
+
+        embeddings.append(
+
+            embedding_model.embed(
+
+                chunk["text"]
+
+            )
+
+        )
+
+    print(f"\nGenerated {len(embeddings)} embedding(s).")
+
+    # --------------------------------------------------
+    # Save Vector Store
+    # --------------------------------------------------
+
+    print("\nSaving vector store...")
+
+    VectorStore.save(
+
+        embeddings=embeddings,
+
+        chunks=chunks,
+
+        index_path=INDEX_PATH,
+
+        chunks_path=CHUNKS_PATH
+
+    )
+
+    print("\nVector store created successfully.")
+
+    print("=" * 60)
+    print("Offline indexing completed.")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
-
-    build_knowledge_base()
-    
+    main()

@@ -1,0 +1,27 @@
+{
+    "id": "BR-0001",
+
+    "rules": [
+
+        {
+            "ruleId": "RULE-001",
+
+            "name": "Finance Approval Required",
+
+            "condition": "Amount > 500000",
+
+            "action": "Finance Approval"
+        },
+
+        {
+            "ruleId": "RULE-002",
+
+            "name": "Vendor Mandatory",
+
+            "condition": "Vendor is empty",
+
+            "action": "Reject Request"
+        }
+
+    ]
+}

@@ -1,50 +1,36 @@
-from utils.embeddings import generate_embeddings
-from utils.vector_store import (
-    load_index,
-    load_chunks,
-    search
+from app.config import (
+    EMBEDDING_MODEL,
+    INDEX_PATH,
+    CHUNKS_PATH
 )
 
-def retrieve(question, top_k=3):
-    """
-    Retrieves the most relevant chunks
-    for a user question.
-    """
+from app.platform.retriever import Retriever
 
-    # Load vector database
-    index = load_index()
 
-    # Load chunk objects
-    chunks = load_chunks()
+retriever = Retriever(
 
-    # Generate embedding for question
-    query_embedding = generate_embeddings([question])[0]
+    EMBEDDING_MODEL,
 
-    # Search FAISS
-    indices = search(
-        index,
-        query_embedding,
-        top_k
-    )
+    INDEX_PATH,
 
-    # Retrieve matching chunks
-    results = []
+    CHUNKS_PATH
 
-    for chunk_index in indices:
+)
 
-        results.append(chunks[chunk_index])
+results = retriever.retrieve(
 
-    return results
+    "Why is my purchase request pending?"
 
-question = "Why is Cargo Request failing with HTTP 401?"
+)
 
-results = retrieve(question)
+print()
 
-for i, chunk in enumerate(results, start=1):
-    print("=" * 80)
+print("=" * 60)
+
+for i, result in enumerate(results, start=1):
+
     print(f"Result {i}")
-    print(f"ID    : {chunk['id']}")
-    print(f"Type  : {chunk['type']}")
-    print(f"Title : {chunk['title']}")
+
+    print(result["source"])
+
     print()
-    print(chunk["text"])

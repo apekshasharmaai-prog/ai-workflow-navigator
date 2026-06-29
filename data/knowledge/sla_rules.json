@@ -1,0 +1,27 @@
+{
+    "id": "SLA-0001",
+
+    "workflow": "Purchase Approval",
+
+    "sla": [
+
+        {
+            "stage": "Manager Approval",
+
+            "hours": 24
+        },
+
+        {
+            "stage": "Finance Approval",
+
+            "hours": 48
+        },
+
+        {
+            "stage": "Procurement Review",
+
+            "hours": 24
+        }
+
+    ]
+}

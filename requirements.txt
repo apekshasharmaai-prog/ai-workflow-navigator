@@ -1,4 +1,10 @@
-streamlit
+fastapi
+uvicorn
+ollama
 sentence-transformers
 faiss-cpu
 numpy
+python-dotenv
+pydantic
+
+#pip install -r requirements.txt

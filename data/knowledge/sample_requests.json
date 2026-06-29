@@ -1,0 +1,41 @@
+{
+    "requests": [
+
+        {
+
+            "requestId": "PR-1001",
+
+            "employee": "Rahul Sharma",
+
+            "amount": 650000,
+
+            "currentStage": "Finance Approval",
+
+            "currentApprover": "Finance Manager",
+
+            "status": "Pending",
+
+            "remainingSLA": "18 Hours"
+
+        },
+
+        {
+
+            "requestId": "PR-1002",
+
+            "employee": "Anita Verma",
+
+            "amount": 25000,
+
+            "currentStage": "Manager Approval",
+
+            "currentApprover": "Manager",
+
+            "status": "Pending",
+
+            "remainingSLA": "8 Hours"
+
+        }
+
+    ]
+}

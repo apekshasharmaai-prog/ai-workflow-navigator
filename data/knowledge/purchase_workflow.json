@@ -1,0 +1,77 @@
+{
+  "id": "WF-001",
+  "workflow_name": "Purchase Approval",
+  "description": "This workflow manages the approval process for purchase requests raised by employees.",
+
+  "metadata": {
+    "current_stage": "Manager Approval",
+    "current_approver": "Department Manager",
+    "next_step": "Finance Approval",
+    "sla": "24 Hours"
+  },
+
+  "stages": [
+    {
+      "name": "Request Submission",
+      "description": "Employee submits a purchase request."
+    },
+    {
+      "name": "Manager Approval",
+      "description": "Department Manager reviews and approves the purchase request."
+    },
+    {
+      "name": "Finance Approval",
+      "description": "Finance validates budget availability and approves the request."
+    },
+    {
+      "name": "Procurement",
+      "description": "Procurement team creates the Purchase Order."
+    },
+    {
+      "name": "Completed",
+      "description": "Purchase Order is issued successfully."
+    }
+  ],
+
+  "business_rules": [
+    {
+      "condition": "Amount <= ₹50,000",
+      "action": "Only Manager Approval is required."
+    },
+    {
+      "condition": "Amount > ₹50,000",
+      "action": "Finance Approval is mandatory."
+    },
+    {
+      "condition": "Amount > ₹500,000",
+      "action": "Director Approval is also required."
+    },
+    {
+      "condition": "Vendor is new",
+      "action": "Vendor verification must be completed before Procurement."
+    }
+  ],
+
+  "faq": [
+    {
+      "question": "Why is my purchase request pending?",
+      "answer": "Your request is waiting for the current approver to complete their review."
+    },
+    {
+      "question": "Who approves after the manager?",
+      "answer": "Finance Department approves after Manager Approval."
+    },
+    {
+      "question": "Can I edit my request after submission?",
+      "answer": "No. Once submitted, the request cannot be edited until it is rejected."
+    },
+    {
+      "question": "What happens after Finance Approval?",
+      "answer": "The request moves to Procurement for Purchase Order creation."
+    },
+    {
+      "question": "What is the SLA for Manager Approval?",
+      "answer": "24 Hours."
+    }
+  ]
+}

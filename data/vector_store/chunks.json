@@ -1,0 +1,265 @@
+[
+    {
+        "id": "AM-0001-1",
+        "document_id": "AM-0001",
+        "chunk_number": 1,
+        "source": "approval_matrix.json",
+        "text": "ID: AM-0001\nWorkflow: Purchase Approval\nApprovalmatrix:\n  Amountrange: 0-50000\n  Approver: Manager\n\n  Amountrange: 50001-500000\n  Approver: Department Head\n\n  Amountrange: Above 500000\n  Approver: Finance Manager",
+        "raw": {
+            "id": "AM-0001",
+            "workflow": "Purchase Approval",
+            "approvalMatrix": [
+                {
+                    "amountRange": "0-50000",
+                    "approver": "Manager"
+                },
+                {
+                    "amountRange": "50001-500000",
+                    "approver": "Department Head"
+                },
+                {
+                    "amountRange": "Above 500000",
+                    "approver": "Finance Manager"
+                }
+            ]
+        }
+    },
+    {
+        "id": "BR-0001-1",
+        "document_id": "BR-0001",
+        "chunk_number": 1,
+        "source": "business_rules.json",
+        "text": "ID: BR-0001\nRules:\n  Ruleid: RULE-001\n  Name: Finance Approval Required\n  Condition: Amount > 500000\n  Action: Finance Approval\n\n  Ruleid: RULE-002\n  Name: Vendor Mandatory\n  Condition: Vendor is empty\n  Action: Reject Request",
+        "raw": {
+            "id": "BR-0001",
+            "rules": [
+                {
+                    "ruleId": "RULE-001",
+                    "name": "Finance Approval Required",
+                    "condition": "Amount > 500000",
+                    "action": "Finance Approval"
+                },
+                {
+                    "ruleId": "RULE-002",
+                    "name": "Vendor Mandatory",
+                    "condition": "Vendor is empty",
+                    "action": "Reject Request"
+                }
+            ]
+        }
+    },
+    {
+        "id": "WF-001-1",
+        "document_id": "WF-001",
+        "chunk_number": 1,
+        "source": "purchase_workflow.json",
+        "text": "ID: WF-001\nWorkflow Name: Purchase Approval\nDescription: This workflow manages the approval process for purchase requests raised by employees.\nMetadata:\n  Current Stage: Manager Approval\n  Current Approver: Department Manager\n  Next Step: Finance Approval\n  SLA: 24 Hours\nStages:\n  Name: Request Submission\n  Description: Employee submits a purchase request.\n\n  Name: Manager Approval\n  Description: Department Manager reviews and approves the purchase request.\n\n  Name: Finance Approval\n  Description: Finance validates budget availability and approves the request.\n\n  Name: Procurement\n  Description: Procurement team creates the Purchase Order.\n\n  Name: Completed\n  Description: Purchase Order is issued successfully.\n\nBusiness Rules:\n  Condition: Amount <= ₹50,000\n  Action: Only Manager Approval is required.\n\n  Condition: Amount > ₹50,000\n  Action: Finance Approval is mandatory.\n\n  Condition: Amount > ₹500,000\n  Action: Director Approval is also required.\n\n  Condition: Vendor is new\n  Action",
+        "raw": {
+            "id": "WF-001",
+            "workflow_name": "Purchase Approval",
+            "description": "This workflow manages the approval process for purchase requests raised by employees.",
+            "metadata": {
+                "current_stage": "Manager Approval",
+                "current_approver": "Department Manager",
+                "next_step": "Finance Approval",
+                "sla": "24 Hours"
+            },
+            "stages": [
+                {
+                    "name": "Request Submission",
+                    "description": "Employee submits a purchase request."
+                },
+                {
+                    "name": "Manager Approval",
+                    "description": "Department Manager reviews and approves the purchase request."
+                },
+                {
+                    "name": "Finance Approval",
+                    "description": "Finance validates budget availability and approves the request."
+                },
+                {
+                    "name": "Procurement",
+                    "description": "Procurement team creates the Purchase Order."
+                },
+                {
+                    "name": "Completed",
+                    "description": "Purchase Order is issued successfully."
+                }
+            ],
+            "business_rules": [
+                {
+                    "condition": "Amount <= ₹50,000",
+                    "action": "Only Manager Approval is required."
+                },
+                {
+                    "condition": "Amount > ₹50,000",
+                    "action": "Finance Approval is mandatory."
+                },
+                {
+                    "condition": "Amount > ₹500,000",
+                    "action": "Director Approval is also required."
+                },
+                {
+                    "condition": "Vendor is new",
+                    "action": "Vendor verification must be completed before Procurement."
+                }
+            ],
+            "faq": [
+                {
+                    "question": "Why is my purchase request pending?",
+                    "answer": "Your request is waiting for the current approver to complete their review."
+                },
+                {
+                    "question": "Who approves after the manager?",
+                    "answer": "Finance Department approves after Manager Approval."
+                },
+                {
+                    "question": "Can I edit my request after submission?",
+                    "answer": "No. Once submitted, the request cannot be edited until it is rejected."
+                },
+                {
+                    "question": "What happens after Finance Approval?",
+                    "answer": "The request moves to Procurement for Purchase Order creation."
+                },
+                {
+                    "question": "What is the SLA for Manager Approval?",
+                    "answer": "24 Hours."
+                }
+            ]
+        }
+    },
+    {
+        "id": "WF-001-2",
+        "document_id": "WF-001",
+        "chunk_number": 2,
+        "source": "purchase_workflow.json",
+        "text": "is required.\n\n  Condition: Amount > ₹50,000\n  Action: Finance Approval is mandatory.\n\n  Condition: Amount > ₹500,000\n  Action: Director Approval is also required.\n\n  Condition: Vendor is new\n  Action: Vendor verification must be completed before Procurement.\n\nFAQ:\n  Question: Why is my purchase request pending?\n  Answer: Your request is waiting for the current approver to complete their review.\n\n  Question: Who approves after the manager?\n  Answer: Finance Department approves after Manager Approval.\n\n  Question: Can I edit my request after submission?\n  Answer: No. Once submitted, the request cannot be edited until it is rejected.\n\n  Question: What happens after Finance Approval?\n  Answer: The request moves to Procurement for Purchase Order creation.\n\n  Question: What is the SLA for Manager Approval?\n  Answer: 24 Hours.",
+        "raw": {
+            "id": "WF-001",
+            "workflow_name": "Purchase Approval",
+            "description": "This workflow manages the approval process for purchase requests raised by employees.",
+            "metadata": {
+                "current_stage": "Manager Approval",
+                "current_approver": "Department Manager",
+                "next_step": "Finance Approval",
+                "sla": "24 Hours"
+            },
+            "stages": [
+                {
+                    "name": "Request Submission",
+                    "description": "Employee submits a purchase request."
+                },
+                {
+                    "name": "Manager Approval",
+                    "description": "Department Manager reviews and approves the purchase request."
+                },
+                {
+                    "name": "Finance Approval",
+                    "description": "Finance validates budget availability and approves the request."
+                },
+                {
+                    "name": "Procurement",
+                    "description": "Procurement team creates the Purchase Order."
+                },
+                {
+                    "name": "Completed",
+                    "description": "Purchase Order is issued successfully."
+                }
+            ],
+            "business_rules": [
+                {
+                    "condition": "Amount <= ₹50,000",
+                    "action": "Only Manager Approval is required."
+                },
+                {
+                    "condition": "Amount > ₹50,000",
+                    "action": "Finance Approval is mandatory."
+                },
+                {
+                    "condition": "Amount > ₹500,000",
+                    "action": "Director Approval is also required."
+                },
+                {
+                    "condition": "Vendor is new",
+                    "action": "Vendor verification must be completed before Procurement."
+                }
+            ],
+            "faq": [
+                {
+                    "question": "Why is my purchase request pending?",
+                    "answer": "Your request is waiting for the current approver to complete their review."
+                },
+                {
+                    "question": "Who approves after the manager?",
+                    "answer": "Finance Department approves after Manager Approval."
+                },
+                {
+                    "question": "Can I edit my request after submission?",
+                    "answer": "No. Once submitted, the request cannot be edited until it is rejected."
+                },
+                {
+                    "question": "What happens after Finance Approval?",
+                    "answer": "The request moves to Procurement for Purchase Order creation."
+                },
+                {
+                    "question": "What is the SLA for Manager Approval?",
+                    "answer": "24 Hours."
+                }
+            ]
+        }
+    },
+    {
+        "id": "sample_requests-1",
+        "document_id": "sample_requests",
+        "chunk_number": 1,
+        "source": "sample_requests.json",
+        "text": "Requests:\n  Requestid: PR-1001\n  Employee: Rahul Sharma\n  Amount: 650000\n  Currentstage: Finance Approval\n  Currentapprover: Finance Manager\n  Status: Pending\n  Remainingsla: 18 Hours\n\n  Requestid: PR-1002\n  Employee: Anita Verma\n  Amount: 25000\n  Currentstage: Manager Approval\n  Currentapprover: Manager\n  Status: Pending\n  Remainingsla: 8 Hours",
+        "raw": {
+            "requests": [
+                {
+                    "requestId": "PR-1001",
+                    "employee": "Rahul Sharma",
+                    "amount": 650000,
+                    "currentStage": "Finance Approval",
+                    "currentApprover": "Finance Manager",
+                    "status": "Pending",
+                    "remainingSLA": "18 Hours"
+                },
+                {
+                    "requestId": "PR-1002",
+                    "employee": "Anita Verma",
+                    "amount": 25000,
+                    "currentStage": "Manager Approval",
+                    "currentApprover": "Manager",
+                    "status": "Pending",
+                    "remainingSLA": "8 Hours"
+                }
+            ]
+        }
+    },
+    {
+        "id": "SLA-0001-1",
+        "document_id": "SLA-0001",
+        "chunk_number": 1,
+        "source": "sla_rules.json",
+        "text": "ID: SLA-0001\nWorkflow: Purchase Approval\nSLA:\n  Stage: Manager Approval\n  Hours: 24\n\n  Stage: Finance Approval\n  Hours: 48\n\n  Stage: Procurement Review\n  Hours: 24",
+        "raw": {
+            "id": "SLA-0001",
+            "workflow": "Purchase Approval",
+            "sla": [
+                {
+                    "stage": "Manager Approval",
+                    "hours": 24
+                },
+                {
+                    "stage": "Finance Approval",
+                    "hours": 48
+                },
+                {
+                    "stage": "Procurement Review",
+                    "hours": 24
+                }
+            ]
+        }
+    }
+]

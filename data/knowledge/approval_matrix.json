@@ -1,0 +1,27 @@
+{
+    "id": "AM-0001",
+
+    "workflow": "Purchase Approval",
+
+    "approvalMatrix": [
+
+        {
+            "amountRange": "0-50000",
+
+            "approver": "Manager"
+        },
+
+        {
+            "amountRange": "50001-500000",
+
+            "approver": "Department Head"
+        },
+
+        {
+            "amountRange": "Above 500000",
+
+            "approver": "Finance Manager"
+        }
+
+    ]
+}
