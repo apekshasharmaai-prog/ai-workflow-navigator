@@ -1,0 +1,309 @@
+{
+  a!localVariables(
+    /* The selected navigation section */
+    local!activeNavSection: 1,
+    /* The navigation sections */
+    local!navSections: {
+      a!map(icon: "briefcase"),
+      a!map(icon: "tasks"),
+      a!map(icon: "paper-briefcase")
+    },
+    {
+      a!columnsLayout(
+        columns: {
+          a!columnLayout(
+            contents: {
+              /* Conditionally display selected navigation section.       *
+               * Sections are created individually here because they will *
+               * have varying contents, so if you change the list in      *
+               * local!navSections, you will need to make sure            *
+               * the list of sections here is the correct length.         */
+              choose(
+                local!activeNavSection,
+                a!sectionLayout(
+                  label: index(
+                    local!navSections.name,
+                    local!activeNavSection,
+                    ""
+                  ),
+                  contents: {
+                    {
+                      a!localVariables(
+                        /* List of icons in milestone (stamp) */
+                        local!milestoneStampIcons: { "briefcase", "folder-open", "check" },
+                        local!currentMilestoneStampStep: local!activeNavSection,
+                        {
+                          /* Display stamps */
+                          a!sideBySideLayout(
+                            items: {
+                              a!sideBySideItem(),
+                              a!forEach(
+                                items: local!milestoneStampIcons,
+                                expression: if(
+                                  /* If final step is completed */
+                                  and(
+                                    fv!index = local!currentMilestoneStampStep,
+                                    fv!index = length(local!milestoneStampIcons)
+                                  ),
+                                  a!sideBySideItem(
+                                    item: a!stampField(
+                                      icon: fv!item,
+                                      size: "TINY",
+                                      backgroundColor: "ACCENT"
+                                    ),
+                                    width: "MINIMIZE"
+                                  ),
+                                  if(
+                                    /* Completed step so far */
+                                    fv!index < local!currentMilestoneStampStep,
+                                    {
+                                      a!sideBySideItem(
+                                        item: a!stampField(
+                                          icon: fv!item,
+                                          size: "TINY",
+                                          backgroundColor: "ACCENT"
+                                        ),
+                                        width: "MINIMIZE"
+                                      ),
+                                      a!sideBySideItem(
+                                        item: a!horizontalLine(
+                                          marginAbove: "LESS",
+                                          marginBelow: "NONE",
+                                          color: "ACCENT",
+                                          weight: "MEDIUM"
+                                        ),
+                                        width: "2X"
+                                      )
+                                    },
+                                    if(
+                                      /* Current completed step */
+                                      fv!index = local!currentMilestoneStampStep,
+                                      {
+                                        a!sideBySideItem(
+                                          item: a!stampField(
+                                            icon: fv!item,
+                                            size: "TINY",
+                                            backgroundColor: "ACCENT"
+                                          ),
+                                          width: "MINIMIZE"
+                                        ),
+                                        a!sideBySideItem(
+                                          item: a!horizontalLine(
+                                            marginAbove: "LESS",
+                                            marginBelow: "NONE",
+                                            color: "#d4d4d4",
+                                            weight: "MEDIUM"
+                                          ),
+                                          width: "2X"
+                                        )
+                                      },
+                                      /* Future steps to complete */
+                                      if(
+                                        fv!index < length(local!milestoneStampIcons),
+                                        {
+                                          a!sideBySideItem(
+                                            item: a!stampField(
+                                              icon: fv!item,
+                                              size: "TINY",
+                                              backgroundColor: "#d4d4d4",
+                                              contentColor: "STANDARD"
+                                            ),
+                                            width: "MINIMIZE"
+                                          ),
+                                          a!sideBySideItem(
+                                            item: a!horizontalLine(
+                                              marginAbove: "LESS",
+                                              marginBelow: "NONE",
+                                              color: "#d4d4d4",
+                                              weight: "MEDIUM"
+                                            ),
+                                            width: "2X"
+                                          )
+                                        },
+                                        /* If final step is incomplete */
+                                        a!sideBySideItem(
+                                          item: a!stampField(
+                                            icon: fv!item,
+                                            size: "TINY",
+                                            backgroundColor: "#d4d4d4",
+                                            contentColor: "STANDARD"
+                                          ),
+                                          width: "MINIMIZE"
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              ),
+                              a!sideBySideItem()
+                            },
+                            marginBelow: "MORE",
+                            alignVertical: "MIDDLE",
+                            spacing: "NONE"
+                          ),
+                          rule!AS_uiRequestDetails(
+                            formData: ri!formData,
+                            guidance: ri!guidance,
+                            currentStep: local!activeNavSection
+                          )
+                        }
+                      )
+                    }
+                  }
+                ),
+                a!sectionLayout(
+                  label: index(
+                    local!navSections.name,
+                    local!activeNavSection,
+                    ""
+                  ),
+                  contents: {
+                    {
+                      a!localVariables(
+                        /* List of icons in milestone (stamp) */
+                        local!milestoneStampIcons: { "briefcase", "folder-open", "check" },
+                        local!currentMilestoneStampStep: local!activeNavSection,
+                        {
+                          /* Display stamps */
+                          a!sideBySideLayout(
+                            items: {
+                              a!sideBySideItem(),
+                              a!forEach(
+                                items: local!milestoneStampIcons,
+                                expression: if(
+                                  /* If final step is completed */
+                                  and(
+                                    fv!index = local!currentMilestoneStampStep,
+                                    fv!index = length(local!milestoneStampIcons)
+                                  ),
+                                  a!sideBySideItem(
+                                    item: a!stampField(
+                                      icon: fv!item,
+                                      size: "TINY",
+                                      backgroundColor: "ACCENT"
+                                    ),
+                                    width: "MINIMIZE"
+                                  ),
+                                  if(
+                                    /* Completed step so far */
+                                    fv!index < local!currentMilestoneStampStep,
+                                    {
+                                      a!sideBySideItem(
+                                        item: a!stampField(
+                                          icon: fv!item,
+                                          size: "TINY",
+                                          backgroundColor: "ACCENT"
+                                        ),
+                                        width: "MINIMIZE"
+                                      ),
+                                      a!sideBySideItem(
+                                        item: a!horizontalLine(
+                                          marginAbove: "LESS",
+                                          marginBelow: "NONE",
+                                          color: "ACCENT",
+                                          weight: "MEDIUM"
+                                        ),
+                                        width: "2X"
+                                      )
+                                    },
+                                    if(
+                                      /* Current completed step */
+                                      fv!index = local!currentMilestoneStampStep,
+                                      {
+                                        a!sideBySideItem(
+                                          item: a!stampField(
+                                            icon: fv!item,
+                                            size: "TINY",
+                                            backgroundColor: "ACCENT"
+                                          ),
+                                          width: "MINIMIZE"
+                                        ),
+                                        a!sideBySideItem(
+                                          item: a!horizontalLine(
+                                            marginAbove: "LESS",
+                                            marginBelow: "NONE",
+                                            color: "#d4d4d4",
+                                            weight: "MEDIUM"
+                                          ),
+                                          width: "2X"
+                                        )
+                                      },
+                                      /* Future steps to complete */
+                                      if(
+                                        fv!index < length(local!milestoneStampIcons),
+                                        {
+                                          a!sideBySideItem(
+                                            item: a!stampField(
+                                              icon: fv!item,
+                                              size: "TINY",
+                                              backgroundColor: "#d4d4d4",
+                                              contentColor: "STANDARD"
+                                            ),
+                                            width: "MINIMIZE"
+                                          ),
+                                          a!sideBySideItem(
+                                            item: a!horizontalLine(
+                                              marginAbove: "LESS",
+                                              marginBelow: "NONE",
+                                              color: "#d4d4d4",
+                                              weight: "MEDIUM"
+                                            ),
+                                            width: "2X"
+                                          )
+                                        },
+                                        /* If final step is incomplete */
+                                        a!sideBySideItem(
+                                          item: a!stampField(
+                                            icon: fv!item,
+                                            size: "TINY",
+                                            backgroundColor: "#d4d4d4",
+                                            contentColor: "STANDARD"
+                                          ),
+                                          width: "MINIMIZE"
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              ),
+                              a!sideBySideItem()
+                            },
+                            marginBelow: "MORE",
+                            alignVertical: "MIDDLE",
+                            spacing: "NONE"
+                          ),
+                          rule!AS_uiRequestLegalDetails(
+                            formData: ri!formData,
+                            guidance: ri!guidance,
+                            currentStep: local!activeNavSection
+                          )
+                        }
+                      )
+                    }
+                  }
+                ),
+                
+              )
+            }
+          ),
+          a!columnLayout(
+            contents: {
+              /* This card is used to set a minimum height on the column so that the *
+               * divider takes up more screen space when there is minimal content.   *
+               * Once content is added to the main column, this can be removed.      */
+              rule!AS_uicopilotPanel(
+                guidance: ri!guidance,
+                currentStep: local!activeNavSection,
+                suggestedDescription: ri!formData.businessPurpose
+              )
+            },
+            width: "MEDIUM"
+          ),
+          
+        },
+        spacing: "SPARSE",
+        showDividers: true
+      )
+    }
+  )
+}

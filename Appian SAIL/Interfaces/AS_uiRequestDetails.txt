@@ -1,0 +1,212 @@
+a!localVariables(
+  /*local!showResults: false,*/
+  a!sectionLayout(
+    label: "Request Details",
+    contents: {
+      a!cardLayout(
+        contents: {
+          a!columnsLayout(
+            columns: {
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    label: "Agreement Type",
+                    placeholder: "-- Select Agreement Type --",
+                    value: ri!formData.agreementType,
+                    saveInto: ri!formData.agreementType,
+                    choiceLabels: {
+                      "Conditional Agreement",
+                      "Software Licensing Agreement",
+                      "Master Services Agreement",
+                      "Statement of Work",
+                      "Non-Disclosure Agreement"
+                    },
+                    choiceValues: {
+                      "Conditional Agreement",
+                      "Software Licensing Agreement",
+                      "Master Services Agreement",
+                      "Statement of Work",
+                      "Non-Disclosure Agreement"
+                    },
+                    required: true
+                  )
+                }
+              ),
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    label: "Country",
+                    placeholder: "-- Select Country --",
+                    value: ri!formData.country,
+                    saveInto: ri!formData.country,
+                    choiceLabels: {
+                      "India",
+                      "United States",
+                      "United Kingdom",
+                      "Germany",
+                      "Singapore"
+                    },
+                    choiceValues: {
+                      "India",
+                      "United States",
+                      "United Kingdom",
+                      "Germany",
+                      "Singapore"
+                    },
+                    required: true
+                  )
+                }
+              )
+            }
+          ),
+          a!paragraphField(
+            label: "Business Justification",
+            instructions: "Briefly describe why Legal review is required.",
+            value: ri!formData.businessPurpose,
+            saveInto: {ri!formData.businessPurpose,
+            rule!AS_getLegalAIAssistance(
+              step:1,
+              formData: ri!formData,
+              onSuccess: {
+                a!save(ri!guidance, fv!result.body)
+                /*a!save(local!showResults, true)*/
+              }
+            )
+            },
+            required: true,
+            characterLimit: 1000,
+            height: "MEDIUM"
+          ),
+          a!columnsLayout(
+            columns: {
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    label: "Business Unit",
+                    placeholder: "-- Select Business Unit --",
+                    value: ri!formData.businessUnit,
+                    saveInto: ri!formData.businessUnit,
+                    choiceLabels: {
+                      "Sales",
+                      "Marketing",
+                      "Finance",
+                      "Human Resources",
+                      "Technology",
+                      "Procurement"
+                    },
+                    choiceValues: {
+                      "Sales",
+                      "Marketing",
+                      "Finance",
+                      "Human Resources",
+                      "Technology",
+                      "Procurement"
+                    }
+                  )
+                }
+              ),
+              a!columnLayout(
+                contents: {
+                  a!dropdownField(
+                    label: "Department",
+                    placeholder: "-- Select Department --",
+                    value: ri!formData.department,
+                    saveInto: ri!formData.department,
+                    choiceLabels: {
+                      "Corporate",
+                      "Operations",
+                      "Product",
+                      "Engineering",
+                      "Legal"
+                    },
+                    choiceValues: {
+                      "Corporate",
+                      "Operations",
+                      "Product",
+                      "Engineering",
+                      "Legal"
+                    }
+                  )
+                }
+              )
+            }
+          ),
+          /*a!columnsLayout(*/
+            /*columns: {*/
+              /*a!columnLayout(*/
+                /*contents: {*/
+                  /*a!dateField(*/
+                    /*label: "Expected Signing Date",*/
+                    /*value: ri!formData.expectedSigningDate,*/
+                    /*saveInto: ri!formData.expectedSigningDate*/
+                  /*)*/
+                /*}*/
+              /*),*/
+              /*a!columnLayout(*/
+                /*contents:   a!dropdownField(*/
+                  /*label: "Business Priority",*/
+                  /*placeholder: "-- Select Business Priority --",*/
+                  /*value: ri!formData.createdBy,*/
+                  /*saveInto: ri!formData.createdBy,*/
+                  /*choiceLabels: {*/
+                    /*"High",*/
+                    /*"Medium",*/
+                    /*"Low"*/
+/*                    */
+                  /*},*/
+                  /*choiceValues: {*/
+                    /*"High",*/
+                    /*"Medium",*/
+                    /*"Low"*/
+/**/
+                  /*},*/
+                /*)*/
+              /*)*/
+            /*}*/
+          /*)*/
+          a!dateField(
+            label: "Expected Signing Date",
+            value: ri!formData.expectedSigningDate,
+            saveInto: ri!formData.expectedSigningDate
+          )
+        },
+        style: "NONE",
+        showBorder: true,
+        padding: "STANDARD"
+      ),
+      a!cardLayout(
+        contents: {
+          a!richTextDisplayField(
+            value: {
+              a!richTextIcon(icon: "robot", color: "ACCENT"),
+              " ",
+              a!richTextItem(
+                text: "AI Guidance will automatically update when required fields are completed.",
+                style: "EMPHASIS"
+              )
+            }
+          )
+        },
+        marginAbove: "STANDARD",
+        marginBelow: "MORE",
+        style: "#F7FAFC",
+        showBorder: false
+      ),
+      a!buttonArrayLayout(
+        buttons: {
+          a!buttonWidget(label: "Save Draft"),
+          a!buttonWidget(
+            label: "Next",
+            saveInto: {a!save(ri!currentStep, 2),
+            a!save(ri!guidance,null)
+            },
+            submit: false,
+            style: "SOLID"
+          )
+        },
+        align: "END"
+      )
+    },
+    labelSize: "MEDIUM"
+  )
+)

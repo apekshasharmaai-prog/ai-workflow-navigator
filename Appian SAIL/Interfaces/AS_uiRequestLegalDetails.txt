@@ -1,0 +1,193 @@
+a!localVariables(
+  {
+    a!sectionLayout(
+      label: "Agreement Details",
+      labelSize: "MEDIUM",
+      contents: {
+        a!columnsLayout(
+          columns: {
+            a!columnLayout(
+              contents: {
+                a!textField(
+                  label: "Counterparty Name",
+                  value: ri!formData.counterpartyName,
+                  saveInto: ri!formData.counterpartyName,
+                  required: true
+                )
+              }
+            ),
+            a!columnLayout(
+              contents: {
+                a!dropdownField(
+                  label: "Counterparty Type",
+                  choiceLabels: {
+                    "Customer",
+                    "Vendor",
+                    "Partner",
+                    "Technology Provider",
+                    "Government Agency",
+                    "Consultant"
+                  },
+                  choiceValues: {
+                    "Customer",
+                    "Vendor",
+                    "Partner",
+                    "Technology Provider",
+                    "Government Agency",
+                    "Consultant"
+                  },
+                  placeholder: "Select",
+                  value: ri!formData.counterpartyType,
+                  saveInto: ri!formData.counterpartyType,
+                  required: true
+                )
+              }
+            )
+          }
+        ),
+        a!columnsLayout(
+          columns: {
+            a!columnLayout(
+              contents: {
+                a!integerField(
+                  label: "Contract Value",
+                  value: ri!formData.contractValue,
+                  saveInto: ri!formData.contractValue,
+                  required: true
+                )
+              }
+            ),
+            a!columnLayout(
+              contents: {
+                a!dropdownField(
+                  label: "Currency",
+                  choiceLabels: { "INR", "USD", "EUR", "GBP", "SGD" },
+                  choiceValues: { "INR", "USD", "EUR", "GBP", "SGD" },
+                  value: ri!formData.currency,
+                  placeholder: "Please select Currency",
+                  saveInto: ri!formData.currency,
+                  required: true
+                )
+              }
+            )
+          }
+        ),
+        a!columnsLayout(
+          columns: {
+            a!columnLayout(
+              contents: {
+                a!dropdownField(
+                  label: "Jurisdiction",
+                  choiceLabels: {
+                    "India",
+                    "United States",
+                    "United Kingdom",
+                    "Singapore"
+                  },
+                  choiceValues: {
+                    "India",
+                    "United States",
+                    "United Kingdom",
+                    "Singapore"
+                  },
+                  value: ri!formData.jurisdiction,
+                  placeholder: "Please select Jurisdiction",
+                  saveInto: {
+                    ri!formData.jurisdiction,
+                    rule!AS_getLegalAIAssistance(
+                      step: 1,
+                      formData: ri!formData,
+                      onSuccess: {
+                        a!save(ri!guidance, fv!result.body)/*a!save(local!showResults, true)*/
+                        
+                      }
+                    )
+                  },
+                  required: true
+                )
+              }
+            ),
+            a!columnLayout(
+              contents: {
+                a!dateField(
+                  label: "Effective Date",
+                  value: ri!formData.effectiveDate,
+                  saveInto: ri!formData.effectiveDate
+                )
+              }
+            )
+          }
+        ),
+        a!columnsLayout(
+        columns: {
+        a!columnLayout(
+        contents: {
+          a!fileUploadField(
+            label: "Supporting Documents",
+            /*target: cons!DOCUMENT_FOLDER,*/
+            /*value:ri!formData.documents,*/
+            /**/
+            /*saveInto:ri!formData.documents*/
+
+          )
+        }
+        ),
+        a!columnLayout(
+        contents:   a!dropdownField(
+        label: "Business Priority",
+        placeholder: "-- Select Business Priority --",
+        value: ri!formData.createdBy,
+        saveInto: ri!formData.createdBy,
+        choiceLabels: {
+        "High",
+        "Medium",
+        "Low"
+                            
+        },
+        choiceValues: {
+        "High",
+        "Medium",
+        "Low"
+        
+        },
+        )
+        )
+        }
+        ),
+      
+        a!cardLayout(
+          style: "#F7FAFC",
+          marginAbove: "STANDARD",
+          showBorder: false,
+          contents: {
+            a!richTextDisplayField(
+              value: {
+                a!richTextIcon(icon: "robot", color: "ACCENT"),
+                " ",
+                a!richTextItem(
+                  text: "AI will automatically assess business priority and commercial risks.",
+                  style: "STRONG"
+                )
+              }
+            )
+          },
+          marginBelow: "MORE"
+        )
+      }
+    ),
+    a!buttonArrayLayout(
+      align: "END",
+      buttons: {
+        a!buttonWidget(
+          label: "Previous",
+          saveInto: a!save(ri!currentStep, 1)
+        ),
+        a!buttonWidget(
+          label: "Next",
+          style: "SOLID",
+          saveInto: a!save(ri!currentStep, 3)
+        )
+      }
+    )
+  }
+)

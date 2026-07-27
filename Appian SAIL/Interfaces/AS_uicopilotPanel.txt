@@ -1,0 +1,329 @@
+if(
+  a!isNullOrEmpty(ri!guidance),
+  /* Welcome Card */
+  a!cardLayout(
+    style: "#F8FAFC",
+    showBorder: true,
+    padding: "MORE",
+    contents: {
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "robot", color: "ACCENT"),
+          " ",
+          a!richTextItem(
+            text: "Enterprise AI Copilot",
+            style: "STRONG",
+            size: "MEDIUM"
+          )
+        }
+      ),
+      a!horizontalLine(),
+      /*a!richTextDisplayField(*/
+        /*value: {*/
+          /*a!richTextItem(*/
+            /*text: "Complete the required request details to unlock AI-powered guidance.",*/
+            /*size: "STANDARD"*/
+          /*)*/
+        /*}*/
+      /*),*/
+      a!richTextDisplayField(
+        marginAbove: "STANDARD",
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Business insights"
+        }
+      ),
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Legal risk analysis"
+        }
+      ),
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Suggested business justification"
+        }
+      ),
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Suggested business priority"
+        }
+      ),
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Submission readiness"
+        }
+      ),
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "check", color: "POSITIVE"),
+          " Smart recommendations"
+        }
+      ),
+      a!cardLayout(
+        marginAbove: "EVEN_MORE",
+        style: "#EEF6FF",
+        showBorder: false,
+        contents: {
+          if(ri!currentStep=1,
+          a!richTextDisplayField(
+            value: {
+              a!richTextIcon(icon: "circle", color: "ACCENT"),
+              " ",
+              a!richTextItem(
+                text: "AI guidance becomes available after completing Agreement Type, Business Justification and Country.",
+                color: "SECONDARY"
+              )
+            }
+          ),
+          a!richTextDisplayField(
+            value: {
+              a!richTextIcon(icon: "circle", color: "ACCENT"),
+              " ",
+              
+              a!richTextItem(
+                text: "AI guidance becomes available after completing Counterparty Name/Type, Contract Value, Currency and Jurisdiction.",
+                color: "SECONDARY"
+              )
+            }
+          ))
+        }
+      )
+    }
+  ),
+  a!cardLayout(
+    style: "#F8FAFC",
+    showBorder: true,
+    padding: "STANDARD",
+    contents: {
+      /*------------------------------------------*/
+      /* Header                                   */
+      /*------------------------------------------*/
+      a!richTextDisplayField(
+        value: {
+          a!richTextIcon(icon: "robot", color: "ACCENT"),
+          "  ",
+          a!richTextItem(
+            text: "Enterprise AI Copilot",
+            style: "STRONG",
+            size: "MEDIUM"
+          )
+        }
+      ),
+      a!horizontalLine(),
+      /* Progress */
+      /*a!cardLayout(*/
+        /*marginBelow: "STANDARD",*/
+        /*contents: {*/
+          /*a!richTextDisplayField(*/
+            /*labelPosition: "COLLAPSED",*/
+            /*value: {*/
+              /*a!richTextIcon(icon: "check-circle", color: "POSITIVE"),*/
+              /*" ",*/
+              /*a!richTextItem(*/
+                /*text: "Submission Readiness",*/
+                /*style: "STRONG"*/
+              /*)*/
+            /*}*/
+          /*),*/
+          /*a!progressBarField(*/
+            /*percentage: ri!guidance.readiness,*/
+            /*color: "ACCENT"*/
+          /*),*/
+          /*a!richTextDisplayField(*/
+            /*value: {*/
+              /*ri!guidance.readiness,*/
+              /*"% Ready",*/
+              /*char(10),*/
+              /*ri!guidance.completedFields,*/
+              /*" of ",*/
+              /*ri!guidance.totalFields,*/
+              /*" fields completed"*/
+            /*}*/
+          /*)*/
+        /*}*/
+      /*),*/
+      /* Insights */
+      a!cardLayout(
+        marginBelow: "STANDARD",
+        contents: {
+          a!richTextDisplayField(
+            value: {
+              a!richTextIcon(icon: "lightbulb", color: "ACCENT"),
+              " ",
+              a!richTextItem(
+                text: "Business Insights",
+                style: "STRONG"
+              )
+            }
+          ),
+          a!forEach(
+            items: ri!guidance.insights,
+            expression: a!richTextDisplayField(value: { "• ", fv!item })
+          )
+        }
+      ),
+      /* Risks */
+      if(
+        a!isNullOrEmpty(ri!guidance.businessRisks),
+        {},
+      a!cardLayout(
+        marginBelow: "STANDARD",
+        contents: {
+          a!richTextDisplayField(
+            value: {
+              a!richTextIcon(
+                icon: "exclamation-circle",
+                color: "NEGATIVE"
+              ),
+              " ",
+              a!richTextItem(text: "Business Risks", style: "STRONG")
+            }
+          ),
+          a!forEach(
+            items: ri!guidance.businessRisks,
+            expression: a!richTextDisplayField(value: { "• ", fv!item })
+          )
+        }
+      )),
+      /* Step 1 */
+      if(
+        ri!currentStep = 1,
+        a!cardLayout(
+          marginBelow: "STANDARD",
+          contents: {
+            a!richTextDisplayField(
+              value: {
+                a!richTextIcon(icon: "pen", color: "ACCENT"),
+                " ",
+                a!richTextItem(
+                  text: "Suggested Business Justification",
+                  style: "STRONG"
+                )
+              }
+            ),
+            a!paragraphField(
+              value: ri!guidance.suggestedBusinessJustification,
+              readOnly: true,
+              height: "MEDIUM"
+            ),
+            a!buttonArrayLayout(
+              align: "END",
+              buttons: {
+                a!buttonWidget(
+                  label: "Accept",
+                  saveInto: a!save(ri!suggestedDescription,ri!guidance.suggestedBusinessJustification)
+                  /*style: "PRIMARY"*/
+                  
+                )
+              }
+            )
+          }
+        ),
+        {}
+      ),
+      /* Step 2 */
+      if(
+        ri!currentStep = 2,
+        a!cardLayout(
+          marginBelow: "STANDARD",
+          contents: {
+            a!richTextDisplayField(
+              value: {
+                a!richTextIcon(icon: "star", color: "ACCENT"),
+                " ",
+                a!richTextItem(
+                  text: "Business Priority",
+                  style: "STRONG"
+                )
+              }
+            ),
+            a!richTextDisplayField(
+              value: {
+                a!richTextItem(
+                  text: ri!guidance.priority,
+                  style: "STRONG",
+                  size: "LARGE"
+                ),
+                char(10),
+                ri!guidance.priorityReason
+              }
+            )
+          }
+        ),
+        {}
+      ),
+      /* Sources */
+      a!cardLayout(
+
+        marginAbove: "STANDARD",
+
+        contents: {
+
+          a!richTextDisplayField(
+
+            value: {
+
+              a!richTextIcon(
+                icon: "database",
+                color: "ACCENT"
+              ),
+
+              " ",
+
+              a!richTextItem(
+
+                text: "Sources",
+
+                style: "STRONG"
+
+              )
+
+            }
+
+          ),
+
+          a!forEach(
+
+            items: ri!guidance.sources,
+
+            expression: a!tagField(
+
+              tags: {
+
+                a!tagItem(
+
+                  text: substitute(
+                    fv!item,
+                    ".json",
+                    ""
+                  ),
+
+                  backgroundColor: "ACCENT"
+                )
+
+              }
+
+            )
+
+          )
+
+        }
+
+      ),
+      a!horizontalLine(),
+      a!richTextDisplayField(
+        value: {
+          a!richTextItem(
+            text: "Powered by Enterprise Knowledge",
+            size: "SMALL",
+            color: "SECONDARY"
+          )
+        }
+      )
+    }
+  )
+)
